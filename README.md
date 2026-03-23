@@ -3,10 +3,10 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Logo" width="120" height="120">
 </p>
 
-<h1 align="center">My Python Project</h1>
+<h1 align="center">GenAI SMS Recruitment Bot</h1>
 
 <p align="center">
-  A feature-rich Python project<br>
+  An SMS-based multi-agent chatbot that interviews candidates for a Python Developer position<br>
   <a href="#demo">View Demo</a>
   ·
   <a href="#demo">Report Bug</a>
@@ -15,183 +15,176 @@
 </p>
 
 ---
-<br></br>
 
 ## Table of Contents
-
 - [About The Project](#about-the-project)
 - [Features](#features)
+- [Architecture](#architecture)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- [Screenshots](#screenshots)
-- [Code Examples](#code-examples)
 - [Project Structure](#project-structure)
+- [Evaluation Results](#evaluation-results)
 - [To-Do List](#to-do-list)
-- [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 - [Acknowledgments](#acknowledgments)
 
 ---
-<br></br>
-
 
 ## About The Project
 
-> This project demonstrates a simple...<br>
+> A multi-agent GenAI chatbot that interacts with job candidates via SMS (simulated via Streamlit).
+> It gathers information, answers candidate questions, and schedules interviews autonomously.
 
 <div style="background: #272822; color: #f8f8f2; padding: 10px; border-radius: 8px;">
-  <b> Technologies:</b> Python, Pandas, NumPy, Matplotlib, OpenAI API
+  <b>Technologies:</b> Python, OpenAI API, LangChain, ChromaDB, SQLite, Streamlit
 </div>
 
 ---
-<br></br>
-
 
 ## Features
 
-- [x] Data loading and cleaning  
-- [x] Data handaling with Pandas & NumPy 
-- [x] Streamlit
-- [x] LangChain
-- [x] Agent Orchestration
-- [x] Modern Python project structure  
-- [x] <span style="color: green; font-weight: bold;">Easy customization</span>  
-- [ ] Cloud deployment _(coming soon!)_  
+- [x] Multi-agent orchestration (Main Agent + 3 Advisors)
+- [x] Vector search via ChromaDB (job description embeddings)
+- [x] SQL-based interview scheduling
+- [x] Fine-tuned Exit Advisor model
+- [x] Streamlit UI (SMS simulation)
+- [x] LangChain Agents & Memory
+- [x] Environment variable management (.env)
+- [x] Modern Python project structure
+- [ ] Cloud deployment _(coming soon!)_
 
 ---
-<br></br>
 
+## Architecture
 
-##  Getting Started
-Explain how to get started with the project...
+| Agent | Role |
+|---|---|
+| **Main Agent** | Orchestrates the dialogue, decides: Continue / Schedule / End |
+| **Exit Advisor** | Fine-tuned model that detects when to end the conversation |
+| **Scheduling Advisor** | Queries SQL DB for available slots, proposes interview times |
+| **Info Advisor** | Retrieves relevant info from ChromaDB (job description embeddings) |
+
+---
+
+## Getting Started
 
 ### Prerequisites
-
 - Python >= 3.8
 - pip
+- OpenAI API key
+- VS Code (recommended)
 
 ### Installation
-
 ```bash
-git clone https://github.com/yourusername/python-project.git
-cd python-project
+git clone https://github.com/emeelashkar-star/genai-recruitment-bot.git
+cd genai-recruitment-bot
+python -m venv .venv
+.venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
----
-<br></br>
+### Environment Variables
 
+Create a `.env` file in the root directory:
+```env
+OPENAI_API_KEY=your_openai_api_key_here
+```
+
+### Run Embedding (one-time setup)
+```bash
+python -m app.modules.embedding
+```
+
+### Run the App
+```bash
+python -m streamlit run streamlit_app/streamlit_main.py
+```
+
+---
 
 ## Usage
 
-```python
-from python_project import pp
-
-result = pp.my_function()
-print(result)
-```
-
-### Or run the CLI:
-
-```bash
-python main.py
-```
+The Streamlit app simulates an SMS conversation. The candidate types messages and the multi-agent system responds, routing through the appropriate advisor at each step.
 
 ---
-<br></br>
-
-
-## Screenshots
-
-<p float="left">
-  <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/e50214173218977.648c4882a75d6.gif"  width="400"/>
-</p>
-
----
-<br></br>
-
-
-## Code Examples
-
-```python
-import pandas as pd
-from openai import OpenAI
-
-client = OpenAI(api_key="your_api_key_here") # Replace with your actual API key or use environment variable
-
-# Load data
-df = pd.read_csv('data/dataset.csv')
-
-```
-
----
-<br></br>
-
 
 ## Project Structure
-
 ```text
-python-project/
-├── data/
-│   └── dataset.csv
-├── python_project/
-│   ├── __init__.py
-│   └── python_project.py
-├── tests/
-│   └── test.py
-├── main.py
+genai-recruitment-bot/
+├── .env                          # Environment variables (ignored by git)
+├── .gitignore
 ├── requirements.txt
-└── README.md
+├── README.md
+├── app/
+│   ├── __init__.py
+│   ├── main.py
+│   └── modules/
+│       ├── __init__.py
+│       ├── main_agent.py         # Main orchestration agent
+│       ├── exit_advisor.py       # Fine-tuned exit detection
+│       ├── scheduling_advisor.py # SQL + scheduling
+│       ├── info_advisor.py       # ChromaDB vector retrieval
+│       ├── embedding.py          # Offline embedding step
+│       └── fine_tuning_prep.py   # Fine-tuning data preparation
+├── streamlit_app/
+│   ├── __init__.py
+│   └── streamlit_main.py         # Main Streamlit app
+├── data/
+│   ├── sms_conversations.json    # Labeled training data
+│   ├── db_Tech.sql               # Recruiter availability DB
+│   └── Python Developer Job Description.pdf
+└── tests/
+    ├── test_evals.ipynb          # Evaluation notebook
+    └── confusion_matrix.png      # Results visualization
 ```
 
 ---
-<br></br>
 
+## Evaluation Results
+
+The system was evaluated on 59 labeled test cases from real SMS conversations:
+
+| Metric | Score |
+|---|---|
+| **Overall Accuracy** | **94.92%** |
+| End detection | 100% (15/15) |
+| Schedule detection | 94.7% (18/19) |
+| Continue detection | 92% (23/25) |
+
+---
 
 ## To-Do List
 
-- [x] Initial project setup
-- [x] Add python_project module
-- [ ] Improve documentation
-- [ ] Add web interface
-
-
----
-<br></br>
-
-
-## Contributing
-
-Contributions are **welcome**! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+- [x] Project setup & structure
+- [x] Embedding pipeline (ChromaDB)
+- [x] Main Agent implementation
+- [x] Exit Advisor (fine-tuned)
+- [x] Scheduling Advisor (SQL)
+- [x] Info Advisor (vector retrieval)
+- [x] Streamlit UI
+- [x] Evaluation notebook
+- [ ] Cloud deployment
 
 ---
-<br></br>
-
-
 
 ## License
 
-Distributed under the XXX License. See `LICENSE` for more information.
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
-<br></br>
-
 
 ## Contact
 
-**Your Name** - [@yourtmail@gmail.com](yourmail@gmail.com)  
-Project Link: [https://github.com/yourusername/python-project](https://github.com/yourusername/python-project)
+**Emeel Ashkar** - emeelashkar@gmail.com
+Project Link: [https://github.com/emeelashkar-star/genai-recruitment-bot](https://github.com/emeelashkar-star/genai-recruitment-bot)
 
 ---
-<br></br>
-
 
 ## Acknowledgments
 
-- [Python](https://www.python.org/)
-- [Pandas](https://pandas.pydata.org/)
 - [OpenAI API](https://platform.openai.com/docs/overview)
-
-
----
+- [LangChain](https://www.langchain.com/)
+- [ChromaDB](https://www.trychroma.com/)
+- [Streamlit](https://streamlit.io/)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
