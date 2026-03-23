@@ -22,6 +22,7 @@
 - [Architecture](#architecture)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Example Conversation](#example-conversation)
 - [Screenshots](#screenshots)
 - [Project Structure](#project-structure)
 - [Evaluation Results](#evaluation-results)
@@ -83,7 +84,6 @@ cd genai-recruitment-bot
 python -m venv .venv
 # Windows
 .venv\Scripts\activate
-
 # macOS / Linux
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -111,6 +111,28 @@ python -m streamlit run streamlit_app/streamlit_main.py
 ## Usage
 
 The Streamlit app simulates an SMS conversation. The candidate types messages and the multi-agent system responds, routing through the appropriate advisor at each step.
+
+---
+
+## Example Conversation
+
+**Bot:** Hi! Thanks for applying to our Python Developer position.
+Could you tell me a bit about your Python experience?
+
+**Candidate:** I have 4 years of experience with Python, mostly backend development with Flask and FastAPI.
+
+**Bot:** That sounds great! We are looking for someone with strong Python skills including
+frameworks like NumPy, Pandas and PyTorch. Based on your background, you seem like a strong fit!
+Would you like to schedule an interview with our recruiter?
+
+**Candidate:** Yes, I'd love to!
+
+**Bot:** Here are the 3 nearest available slots:
+- Date: 2026-03-23, Time: 09:00
+- Date: 2026-03-23, Time: 10:00
+- Date: 2026-03-23, Time: 11:00
+
+Please let me know which time works best for you!
 
 ---
 
@@ -201,25 +223,3 @@ Project Link: [https://github.com/emeelashkar-star/genai-recruitment-bot](https:
 - [ChromaDB](https://www.trychroma.com/)
 - [Streamlit](https://streamlit.io/)
 - [SQLAlchemy](https://www.sqlalchemy.org/)
-
----
-
-## Example Conversation
-
-**Bot:** Hi! Thanks for applying to our Python Developer position.
-Could you tell me a bit about your Python experience?
-
-**Candidate:** I have 4 years of experience with Python, mostly backend development with Flask and FastAPI.
-
-**Bot:** That sounds great! We are looking for someone with strong Python skills including
-frameworks like NumPy, Pandas and PyTorch. Based on your background, you seem like a strong fit!
-Would you like to schedule an interview with our recruiter?
-
-**Candidate:** Yes, I'd love to!
-
-**Bot:** Here are the 3 nearest available slots:
-- Date: 2026-03-23, Time: 09:00
-- Date: 2026-03-23, Time: 10:00
-- Date: 2026-03-23, Time: 11:00
-
-Please let me know which time works best for you!
