@@ -7,11 +7,11 @@
 
 <p align="center">
   An SMS-based multi-agent chatbot that interviews candidates for a Python Developer position<br>
-  <a href="#demo">View Demo</a>
+  <a href="https://github.com/emeelashkar-star/genai-recruitment-bot">View Project</a>
   ·
-  <a href="#demo">Report Bug</a>
+  <a href="https://github.com/emeelashkar-star/genai-recruitment-bot/issues">Report Bug</a>
   ·
-  <a href="#demo">Request Feature</a>
+  <a href="https://github.com/emeelashkar-star/genai-recruitment-bot/issues">Request Feature</a>
 </p>
 
 ---
@@ -22,6 +22,7 @@
 - [Architecture](#architecture)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Screenshots](#screenshots)
 - [Project Structure](#project-structure)
 - [Evaluation Results](#evaluation-results)
 - [To-Do List](#to-do-list)
@@ -109,6 +110,14 @@ The Streamlit app simulates an SMS conversation. The candidate types messages an
 
 ---
 
+## Screenshots
+
+<p align="center">
+  <img src="tests/confusion_matrix.png" width="500"/>
+</p>
+
+---
+
 ## Project Structure
 ```text
 genai-recruitment-bot/
@@ -176,7 +185,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-**Emeel Ashkar** - emeelashkar@gmail.com
+**Emeel Ashkar** - emeel.ashkar@gmail.com
 Project Link: [https://github.com/emeelashkar-star/genai-recruitment-bot](https://github.com/emeelashkar-star/genai-recruitment-bot)
 
 ---
